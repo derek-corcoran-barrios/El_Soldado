@@ -63,20 +63,28 @@ kable(Codes, caption = "Tabla de atributos del mapa") %>%
 
 ### Test 1
 
-```{r}
+```{r, eval=FALSE}
 pal <- colorFactor(rainbow(10), values(LandCover),
                     na.color = "transparent")
 
 leaflet() %>% addTiles()  %>%  addRasterImage(LandCover, colors = pal, opacity = 0.8) %>%  addLegend(pal = pal, values = values(LandCover),title = "Land Cover", labels = Codes$Selected)
 ```
 
+```{r, echo = FALSE}
+knitr::include_graphics("Leaflet1.png")
+```
+
+
 ### Test 2 
 
 In this second one I thought that adding the labels attribute to the `addLegend` function would do the trick, but it does not work
 
-```{r}
+```{r, eval = FALSE}
 pal <- colorFactor(rainbow(10), values(LandCover),
                     na.color = "transparent")
 
 leaflet() %>% addTiles()  %>%  addRasterImage(LandCover, colors = pal, opacity = 0.8) %>%  addLegend(pal = pal, values = values(LandCover),title = "Land Cover", labels = Codes$Selected)
+```
+```{r, echo = FALSE}
+knitr::include_graphics("Leaflet2.png")
 ```
