@@ -1,0 +1,10 @@
+base
+sp
+rgdal
+raster
+kableExtra
+lattice
+RColorBrewer
+latticeExtra
+rasterVis
+leaflet

@@ -1,0 +1,78 @@
+---
+title: "Git_Question"
+author: "Derek Corcoran"
+date: "11/29/2019"
+output: html_document
+---
+
+I am trying to plot a categorical map in leaflet with a categorical legend showing a character vector as labels:
+
+
+## Load the packages
+
+first I load the required packages
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, cache = T, message = F, warning = F)
+```
+
+
+```{r}
+library(rgdal)
+library(raster)
+library(kableExtra)
+library(rasterVis)
+library(leaflet)
+```
+
+## Then I load the required datasets
+
+```{r mapa}
+Codes <- readRDS("Codes.rds")
+LandCover <- readRDS("LandCover.rds")
+```
+
+if we look at the landcover raster it is a categorical raster that I made with `ratify` from the raster package
+
+```{r}
+LandCover
+```
+
+I want to have the name attribute as the legend
+
+which works using the `levelplot` function from the rasterVis package:
+
+```{r}
+rasterVis::levelplot(LandCover)
+```
+
+The data is also repited in the Codes data.frame if it works
+
+```{r Tabla}
+kable(Codes, caption = "Tabla de atributos del mapa") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## Two tests that didn't work
+
+### Test 1
+
+```{r}
+pal <- colorFactor(rainbow(10), values(LandCover),
+                    na.color = "transparent")
+
+leaflet() %>% addTiles()  %>%  addRasterImage(LandCover, colors = pal, opacity = 0.8) %>%  addLegend(pal = pal, values = values(LandCover),title = "Land Cover", labels = Codes$Selected)
+```
+
+### Test 2 
+
+In this second one I thought that adding the labels attribute to the `addLegend` function would do the trick, but it does not work
+
+```{r}
+pal <- colorFactor(rainbow(10), values(LandCover),
+                    na.color = "transparent")
+
+leaflet() %>% addTiles()  %>%  addRasterImage(LandCover, colors = pal, opacity = 0.8) %>%  addLegend(pal = pal, values = values(LandCover),title = "Land Cover", labels = Codes$Selected)
+```
